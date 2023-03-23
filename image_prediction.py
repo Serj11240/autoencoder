@@ -10,6 +10,7 @@ Original file is located at
 import pickle
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
 
 #load model with trained weights for image autoencodered generation
 pickled_model = pickle.load(open('Autoencoder_model.pkl', 'rb'))
@@ -24,7 +25,7 @@ def check_image_output(file_path):
 
   #prepare image to pass through model
   #resize the original image to dimentions of the training dataset
-  resized = cv2.resize(img, (img_width, img_height), interpolation = cv2.INTER_AREA)
+  resized = cv2.resize(img, (232, 232), interpolation = cv2.INTER_AREA)
   #create new image by passing through a model
   pred = pickled_model.predict(np.array([resized]))
   #matplotlib takes range of [0..1] for floats and [0..255] for integers
@@ -33,7 +34,7 @@ def check_image_output(file_path):
   plt.figure(figsize=(12, 12))  
   ax = plt.subplot(2, 1, 1)
   plt.axis("off")
-  plt.imshow(img)
+  plt.imshow(resized)
  
   ax = plt.subplot(2, 1, 2)
   plt.imshow(pred[0])
